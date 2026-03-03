@@ -6,7 +6,7 @@
  * 2. Delete all default code
  * 3. Copy-paste this ENTIRE file
  * 4. Save (Ctrl+S)
- * 5. Run setupDatabase() function ONCE
+ * 5. Run setupDatabase() function ONCE (untuk membuat sheet jika belum ada)
  * 6. Deploy > New deployment > Web app
  * 7. Execute as: Me, Who has access: Anyone
  * 8. Deploy and copy the URL
@@ -15,9 +15,9 @@
 // ==================== DATABASE SETUP ====================
 function setupDatabase() {
   // Get spreadsheet - use active (bound) or create new one
-  let ss = SpreadsheetApp.getActiveSpreadsheet();
+  let ss = getActiveSpreadsheet();
   
-  // If not bound to a spreadsheet, create new one
+  // If not bound to a spreadsheet, create new one (ini jarang terjadi jika sudah set SPREADSHEET_ID)
   if (!ss) {
     ss = SpreadsheetApp.create('School_Portal_Database');
     Logger.log('✅ Created new spreadsheet: ' + ss.getName());
@@ -57,14 +57,11 @@ function setupDatabase() {
     createSheetIfNotExists(ss, sheetName, headers);
   }
   
-  // Add sample user if Users sheet is empty
+  // Add sample admin user if Users sheet is empty
   const usersSheet = ss.getSheetByName('Users');
   if (usersSheet && usersSheet.getLastRow() <= 1) {
     usersSheet.appendRow(['U001', 'admin', 'admin123', 'admin', 'System Admin', '']);
   }
-  
-  // Add some sample data for demonstration
-  addSampleData(ss);
   
   return true;
 }
@@ -84,42 +81,6 @@ function createSheet(ss, name, headers) {
   const hr = sheet.getRange(1, 1, 1, headers.length);
   hr.setBackground('#4f46e5').setFontColor('#ffffff').setFontWeight('bold').setHorizontalAlignment('center');
   sheet.autoResizeColumns(1, headers.length);
-}
-
-function addSampleData(ss) {
-  // Students (with password = studentNumber)
-  const students = [
-    ['S001','Ahmad Rizky','Laki-laki',2024,'24001','10A','ahmad@school.com','08123456789','Bapak Budi Santoso','08129876001','Active','24001'],
-    ['S002','Budi Santoso','Laki-laki',2024,'24002','10A','budi@school.com','08123456790','Bapak Ahmad Fauzi','08129876002','Active','24002'],
-    ['S003','Citra Dewi','Perempuan',2023,'23001','10A','citra@school.com','08123456791','Ibu Siti Aminah','08129876003','Active','23001'],
-    ['S004','Dian Sastro','Perempuan',2023,'23002','10B','dian@school.com','08123456792','Bapak Sudirman','08129876004','Active','23002']
-  ];
-  students.forEach(s => ss.getSheetByName('Students').appendRow(s));
-  
-  // Teachers (with password = teacherNumber)
-  const teachers = [
-    ['T001','Dr. Andi Wijaya','Laki-laki',2020,'T2001','andi@school.com','08129876543','Active','Matematika','T2001'],
-    ['T002','Prof. Siti Aminah','Perempuan',2019,'T2101','siti@school.com','08129876544','Active','Fisika','T2101'],
-    ['T003','Bapak Sudirman','Laki-laki',2018,'T1901','sudirman@school.com','08129876545','Active','Biologi','T1901']
-  ];
-  teachers.forEach(t => ss.getSheetByName('Teachers').appendRow(t));
-  
-  // Classes
-  const classes = [
-    ['C001','10A - Science','10','Dr. Andi Wijaya',30],
-    ['C002','10B - Social','10','Prof. Siti Aminah',28],
-    ['C003','11A - Science','11','Bapak Sudirman',32]
-  ];
-  classes.forEach(c => ss.getSheetByName('Classes').appendRow(c));
-  
-  // Announcements
-  const announcements = [
-    ['AN001','Ujian Semester','Ujian semester akan dilaksanakan minggu depan. Harap persiapkan diri dengan baik.',new Date().toLocaleDateString('id-ID'),'urgent','','Admin','FALSE'],
-    ['AN002','Libur Nasional','Hari libur nasional pada tanggal 17 Agustus. Sekolah libur.',new Date().toLocaleDateString('id-ID'),'general','','Admin','FALSE']
-  ];
-  announcements.forEach(a => ss.getSheetByName('Announcements').appendRow(a));
-  
-  Logger.log('✅ Sample data added');
 }
 
 // ==================== WEB APP ====================
@@ -174,8 +135,6 @@ function doPost(e) {
 }
 
 // ==================== GOOGLE SCRIPT RUN FUNCTIONS ====================
-// These functions can be called directly from frontend via google.script.run
-
 function apiLogin(username, password, role) {
   Logger.log('=== apiLogin called ===');
   Logger.log('Username: ' + username + ', Role: ' + role);
@@ -875,16 +834,6 @@ function updateData(sheetName, keyCol, keyValue, data) {
   throw new Error('Record not found');
 }
 
-function createSheet(ss, sheetName, headers) {
-  const sheet = ss.insertSheet(sheetName);
-  if (headers && headers.length > 0) {
-    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-    sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');
-  }
-  Logger.log('Created sheet: ' + sheetName + ' with headers: ' + headers.join(', '));
-  return sheet;
-}
-
 // ==================== CONFIGURATION ====================
 // Your spreadsheet ID (from the URL)
 const SPREADSHEET_ID = '1q1VtKOxkM83dEtlWnaKeb2-of4JaZYfeKiHAi2VZxq4';
@@ -893,8 +842,8 @@ const SPREADSHEET_ID = '1q1VtKOxkM83dEtlWnaKeb2-of4JaZYfeKiHAi2VZxq4';
 // Set WHATSVA_ENABLED to true and paste your API key to activate
 // WhatsApp notifications when students submit attendance.
 // If false, everything works normally without WhatsApp.
-const WHATSVA_ENABLED = false;
-const WHATSVA_API_KEY = 'YOUR_API_KEY_HERE';  // Get from whatsva.com dashboard
+const WHATSVA_ENABLED = true;
+const WHATSVA_API_KEY = 'HcGXnqzmREd7';  // Get from whatsva.com dashboard
 const WHATSVA_API_URL = 'https://whatsva.com/api/sendMessageText';
 
 // Helper to get spreadsheet
@@ -1243,3 +1192,37 @@ function changePassword(data) {
   throw new Error('User not found');
 }
 
+/**
+ * Mengambil data untuk dropdown (Nama Guru dan Nama Kelas)
+ * Menggunakan helper getData yang sudah ada agar konsisten
+ */
+function apiGetDropdownOptions() {
+  try {
+    const ss = getActiveSpreadsheet();
+    if (!ss) return { teachers: [], classes: [] };
+
+    const result = {
+      teachers: [],
+      classes: []
+    };
+
+    // 1. Ambil Data Guru
+    const teachers = getData('Teachers'); // Menggunakan helper getData
+    result.teachers = teachers.map(t => ({
+      id: t.teacherId || t.teacherID || t.name, // Gunakan ID, fallback ke nama
+      name: t.name
+    }));
+
+    // 2. Ambil Data Kelas
+    const classes = getData('Classes'); // Menggunakan helper getData
+    result.classes = classes.map(c => ({
+      id: c.classId || c.classID || c.className, // Gunakan ID, fallback ke nama
+      name: c.className
+    }));
+
+    return result;
+  } catch (e) {
+    Logger.log("Error fetching dropdown options: " + e.toString());
+    return { teachers: [], classes: [] };
+  }
+}
