@@ -196,7 +196,7 @@
         </div>
       </div>
 
-      <!-- Navigation -->
+            <!-- Navigation -->
       <nav class="px-4 pb-24">
         <button onclick="showAdminPage('dashboard')" id="nav-dashboard"
           class="nav-item active w-full flex items-center px-5 py-4 text-white/80 hover:bg-white/15 hover:text-white transition-all rounded-2xl my-2">
@@ -204,19 +204,19 @@
           <span class="nav-text ml-4 font-medium">Dashboard</span>
         </button>
 
-        <button onclick="showAdminPage('population')" id="nav-population"
+        <button onclick="showAdminPage('population'); loadAllClassDropdowns();" id="nav-population"
           class="nav-item w-full flex items-center px-5 py-4 text-white/80 hover:bg-white/15 hover:text-white transition-all rounded-2xl my-2">
           <i class="fas fa-users w-6 text-lg"></i>
           <span class="nav-text ml-4 font-medium">Population</span>
         </button>
 
-        <button onclick="showAdminPage('schedule')" id="nav-schedule"
+        <button onclick="showAdminPage('schedule'); loadAllClassDropdowns();" id="nav-schedule"
           class="nav-item w-full flex items-center px-5 py-4 text-white/80 hover:bg-white/15 hover:text-white transition-all rounded-2xl my-2">
           <i class="fas fa-calendar-alt w-6 text-lg"></i>
           <span class="nav-text ml-4 font-medium">Schedule</span>
         </button>
 
-        <button onclick="showAdminPage('quiz')" id="nav-quiz"
+        <button onclick="showAdminPage('quiz'); loadAllClassDropdowns();" id="nav-quiz"
           class="nav-item w-full flex items-center px-5 py-4 text-white/80 hover:bg-white/15 hover:text-white transition-all rounded-2xl my-2">
           <i class="fas fa-clipboard-list w-6 text-lg"></i>
           <span class="nav-text ml-4 font-medium">Quiz</span>
@@ -482,11 +482,7 @@
                   <select id="admin-student-class-filter" onchange="renderAdminStudents()"
                     class="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     <option value="all">Semua Kelas</option>
-                    <option value="10A">10A</option>
-                    <option value="10B">10B</option>
-                    <option value="10C">10C</option>
-                    <option value="11A">11A</option>
-                  </select>
+                    </select>
                 </div>
                 <button onclick="openAddStudentModal()"
                   class="btn-primary px-4 lg:px-6 py-2.5 text-sm whitespace-nowrap bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all">
@@ -558,10 +554,6 @@
                   <select id="admin-teacher-subject-filter" onchange="renderAdminTeachers()"
                     class="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     <option value="all">Semua Mapel</option>
-                    <option value="Matematika">Matematika</option>
-                    <option value="Fisika">Fisika</option>
-                    <option value="Biologi">Biologi</option>
-                    <option value="Kimia">Kimia</option>
                   </select>
                 </div>
                 <button onclick="openAddTeacherModal()"
@@ -687,12 +679,6 @@
                   <select id="schedule-class-filter" onchange="renderAdminSchedule()"
                     class="bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2 text-xs lg:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     <option value="">All Classes</option>
-                    <option value="10A">10A</option>
-                    <option value="10B">10B</option>
-                    <option value="10C">10C</option>
-                    <option value="11A">11A</option>
-                    <option value="11B">11B</option>
-                    <option value="12A">12A</option>
                   </select>
                   <button onclick="openAddScheduleModal()"
                     class="btn-primary px-3 lg:px-4 py-2 text-xs lg:text-sm bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all">
@@ -1971,11 +1957,6 @@
             <select id="teacher-student-filter-class" onchange="filterTeacherStudents()"
               class="px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
               <option value="all">Semua Kelas</option>
-              <option value="10A">Kelas 10A</option>
-              <option value="10B">Kelas 10B</option>
-              <option value="10C">Kelas 10C</option>
-              <option value="11A">Kelas 11A</option>
-              <option value="11B">Kelas 11B</option>
             </select>
           </div>
 
@@ -2316,11 +2297,7 @@
           <label class="block text-xs lg:text-sm font-medium text-gray-600 mb-1.5 lg:mb-2">Kelas</label>
           <select id="new-student-class" required
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <option value="10A">Kelas 10A</option>
-            <option value="10B">Kelas 10B</option>
-            <option value="10C">Kelas 10C</option>
-            <option value="11A">Kelas 11A</option>
-            <option value="11B">Kelas 11B</option>
+            <option value="all">Semua Kelas</option>
           </select>
         </div>
 
@@ -2408,11 +2385,7 @@
           <label class="block text-xs lg:text-sm font-medium text-gray-600 mb-1.5 lg:mb-2">Kelas</label>
           <select id="new-student-teacher-class" required
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <option value="10A">Kelas 10A</option>
-            <option value="10B">Kelas 10B</option>
-            <option value="10C">Kelas 10C</option>
-            <option value="11A">Kelas 11A</option>
-            <option value="11B">Kelas 11B</option>
+            <option value="all">Semua Kelas</option>
           </select>
         </div>
 
@@ -2493,12 +2466,7 @@
           <label class="block text-xs lg:text-sm font-medium text-gray-600 mb-1.5 lg:mb-2">Kelas</label>
           <select id="new-schedule-class" required
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="10A">10A</option>
-            <option value="10B">10B</option>
-            <option value="10C">10C</option>
-            <option value="11A">11A</option>
-            <option value="11B">11B</option>
-            <option value="12A">12A</option>
+            <option value="all">Semua Kelas</option>
           </select>
         </div>
 
@@ -2554,26 +2522,12 @@
             <label class="block text-xs lg:text-sm font-medium text-gray-600 mb-1.5 lg:mb-2">Mata Pelajaran</label>
             <select id="quiz-subject" required
               class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="Matematika">Matematika</option>
-              <option value="Fisika">Fisika</option>
-              <option value="Biologi">Biologi</option>
-              <option value="Kimia">Kimia</option>
-              <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-              <option value="Bahasa Inggris">Bahasa Inggris</option>
-              <option value="Sejarah">Sejarah</option>
-              <option value="Geografi">Geografi</option>
             </select>
           </div>
           <div>
             <label class="block text-xs lg:text-sm font-medium text-gray-600 mb-1.5 lg:mb-2">Kelas</label>
             <select id="quiz-class" required
               class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="10A">10A</option>
-              <option value="10B">10B</option>
-              <option value="10C">10C</option>
-              <option value="11A">11A</option>
-              <option value="11B">11B</option>
-              <option value="12A">12A</option>
             </select>
           </div>
         </div>
@@ -2750,14 +2704,6 @@
           <select id="new-teacher-subject" required
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
             <option value="">Pilih Mata Pelajaran</option>
-            <option value="Matematika">Matematika</option>
-            <option value="Fisika">Fisika</option>
-            <option value="Biologi">Biologi</option>
-            <option value="Kimia">Kimia</option>
-            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-            <option value="Bahasa Inggris">Bahasa Inggris</option>
-            <option value="Sejarah">Sejarah</option>
-            <option value="Geografi">Geografi</option>
           </select>
         </div>
 
@@ -2806,9 +2752,6 @@
           <select id="new-class-grade-level" required
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
             <option value="">Select Grade</option>
-            <option value="10">Grade 10</option>
-            <option value="11">Grade 11</option>
-            <option value="12">Grade 12</option>
           </select>
         </div>
 
@@ -3023,9 +2966,6 @@
           <label class="block text-xs lg:text-sm font-medium text-gray-600 mb-1.5 lg:mb-2">Kelas</label>
           <select id="edit-student-class" required
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <option value="10A">Kelas 10A</option>
-            <option value="10B">Kelas 10B</option>
-            <option value="11A">Kelas 11A</option>
           </select>
         </div>
         <div class="mb-4">
@@ -3141,9 +3081,6 @@
           <label class="block text-xs lg:text-sm font-medium text-gray-600 mb-1.5 lg:mb-2">Grade Level</label>
           <select id="edit-class-grade" required
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm">
-            <option value="10">Grade 10</option>
-            <option value="11">Grade 11</option>
-            <option value="12">Grade 12</option>
           </select>
         </div>
         <div class="mb-4">
@@ -3260,9 +3197,6 @@
           <select id="new-announcement-class"
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm">
             <option value="">Semua Kelas</option>
-            <option value="10A">10A</option>
-            <option value="10B">10B</option>
-            <option value="11A">11A</option>
           </select>
         </div>
         <div class="mb-6">
@@ -3356,9 +3290,6 @@
           <select id="edit-announcement-class"
             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 lg:px-4 py-2.5 lg:py-3 text-sm">
             <option value="">Semua Kelas</option>
-            <option value="10A">10A</option>
-            <option value="10B">10B</option>
-            <option value="11A">11A</option>
           </select>
         </div>
         <div class="mb-6">
@@ -3910,6 +3841,174 @@
           .apiSaveSetting(key, value);
       }
     };
+
+    // ==================== FIX: MISSING FUNCTIONS ====================
+  
+  // Fungsi ini dipanggil oleh onchange di HTML Teacher Students
+  function filterTeacherStudents() {
+    renderTeacherStudents();
+  }
+
+  // Fungsi untuk memastikan dropdown bersih dan terisi data baru
+  function loadDropdownOptions() {
+    google.script.run
+      .withSuccessHandler(function(response) {
+        if (!response) return;
+
+        // 1. Isi Dropdown Guru di Modal Jadwal
+        var teacherSelect = document.getElementById('new-schedule-teacher');
+        if (teacherSelect) {
+          // Hapus semua opsi lama (termasuk dummy)
+          teacherSelect.innerHTML = '<option value="">Pilih Guru</option>';
+          if (response.teachers && response.teachers.length > 0) {
+            response.teachers.forEach(function(t) {
+              var option = document.createElement('option');
+              option.value = t.name; // Simpan Nama sebagai Value
+              option.textContent = t.name;
+              teacherSelect.appendChild(option);
+            });
+          } else {
+             teacherSelect.innerHTML = '<option value="">Tidak ada data guru</option>';
+          }
+        }
+
+        // 2. Isi Dropdown Kelas di Modal Jadwal
+        var classSelectSchedule = document.getElementById('new-schedule-class');
+        if (classSelectSchedule) {
+          // Hapus semua opsi lama (termasuk dummy)
+          classSelectSchedule.innerHTML = '<option value="">Pilih Kelas</option>';
+          if (response.classes && response.classes.length > 0) {
+            response.classes.forEach(function(c) {
+              var option = document.createElement('option');
+              option.value = c.id; // Simpan ID
+              option.textContent = c.name; // Tampilkan Nama
+              classSelectSchedule.appendChild(option);
+            });
+          } else {
+             classSelectSchedule.innerHTML = '<option value="">Tidak ada data kelas</option>';
+          }
+        }
+        
+        // 3. Isi Dropdown Kelas di Modal Quiz (jika ada)
+        var classSelectQuiz = document.getElementById('quiz-class');
+        if (classSelectQuiz) {
+          classSelectQuiz.innerHTML = '<option value="">Pilih Kelas</option>';
+           if (response.classes && response.classes.length > 0) {
+            response.classes.forEach(function(c) {
+              var option = document.createElement('option');
+              option.value = c.id;
+              option.textContent = c.name;
+              classSelectQuiz.appendChild(option);
+            });
+          }
+        }
+
+      })
+      .withFailureHandler(function(error) {
+        console.error("Gagal memuat opsi dropdown: " + error.message);
+      })
+      .apiGetDropdownOptions();
+  }
+
+  // ==================== HELPER: LOAD ALL DROPDOWNS ====================
+  // Fungsi ini mengisi SEMUA dropdown kelas dan guru di halaman ini
+  
+  function loadAllClassDropdowns() {
+    google.script.run
+      .withSuccessHandler(function(response) {
+        if (!response) return;
+
+        // ==================== LOAD KELAS ====================
+        // Daftar ID elemen <select> yang perlu diisi data kelas
+        const classSelectors = [
+          'admin-student-class-filter',   // Filter di Population -> Siswa
+          'schedule-class-filter',        // Filter di Admin Schedule
+          'quiz-class-filter',            // Filter di Admin Quiz
+          'new-student-class',            // Modal Tambah Siswa (Admin)
+          'new-student-teacher-class',    // Modal Tambah Siswa (Teacher)
+          'new-schedule-class',           // Modal Tambah Jadwal
+          'quiz-class',                   // Modal Buat Quiz
+          'teacher-student-filter-class', // Filter Siswa (Teacher)
+          'teacher-announcement-class',   // Filter Pengumuman (Teacher)
+          'edit-student-class',           // Modal Edit Siswa
+          'edit-schedule-class',          // Modal Edit Jadwal
+          'new-class-grade-level',        // Modal Tambah Kelas (Grade Level)
+          'new-announcement-class',       // Modal Tambah Pengumuman
+          'edit-announcement-class'       // Modal Edit Pengumuman
+        ];
+
+        classSelectors.forEach(function(id) {
+          const select = document.getElementById(id);
+          if (select) {
+            // Ambil opsi pertama yang sudah ada (misal: "Semua Kelas" atau "Pilih Kelas")
+            const firstOption = select.querySelector('option:first-child');
+            
+            // Hapus semua opsi lama
+            select.innerHTML = '';
+            
+            // Kembalikan opsi pertama jika ada
+            if (firstOption) {
+              select.appendChild(firstOption);
+            } else {
+              // Jika tidak ada opsi default, buat baru
+              const opt = document.createElement('option');
+              opt.value = "";
+              opt.textContent = "Pilih Kelas";
+              select.appendChild(opt);
+            }
+
+            // Tambahkan data dari Sheet
+            if (response.classes && response.classes.length > 0) {
+              response.classes.forEach(function(c) {
+                const option = document.createElement('option');
+                option.value = c.id || c.name; // Gunakan ID jika ada, atau Name
+                option.textContent = c.name;
+                select.appendChild(option);
+              });
+            }
+          }
+        });
+
+        // ==================== LOAD GURU ====================
+        const teacherSelectors = [
+          'new-schedule-teacher',      // Modal Tambah Jadwal
+          'new-class-teacher',         // Modal Tambah Kelas (Wali Kelas)
+          'edit-schedule-teacher',     // Modal Edit Jadwal
+          'admin-teacher-subject-filter' // Filter Guru
+        ];
+
+        teacherSelectors.forEach(function(id) {
+          const select = document.getElementById(id);
+          if (select) {
+            const firstOption = select.querySelector('option:first-child');
+            select.innerHTML = '';
+            
+            if (firstOption) {
+              select.appendChild(firstOption);
+            } else {
+              const opt = document.createElement('option');
+              opt.value = "";
+              opt.textContent = "Pilih Guru";
+              select.appendChild(opt);
+            }
+
+            if (response.teachers && response.teachers.length > 0) {
+              response.teachers.forEach(function(t) {
+                const option = document.createElement('option');
+                option.value = t.name; 
+                option.textContent = t.name;
+                select.appendChild(option);
+              });
+            }
+          }
+        });
+
+      })
+      .withFailureHandler(function(error) {
+        console.error("Gagal memuat opsi dropdown: " + error.message);
+      })
+      .apiGetDropdownOptions();
+  }
   </script>
 
   <?!= include('app.js.html'); ?>
