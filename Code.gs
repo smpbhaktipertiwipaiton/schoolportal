@@ -86,7 +86,7 @@ function createSheet(ss, name, headers) {
 // ==================== WEB APP ====================
 function doGet(e) {
   try {
-    const template = HtmlService.createTemplateFromFile('Index');
+    const template = HtmlService.createTemplateFromFile('index');
     const html = template.evaluate()
       .setTitle('SMP BP Portal')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
@@ -1226,3 +1226,4 @@ function apiGetDropdownOptions() {
     return { teachers: [], classes: [] };
   }
 }
+
